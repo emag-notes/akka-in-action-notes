@@ -94,7 +94,8 @@ trait BoxOfficeApi {
   lazy val boxOffice = createBoxOffice()
 
   def createEvent(event: String, numberOfTickets: Int) =
-    boxOffice.ask(CreateEvent(event, numberOfTickets))
+    boxOffice
+      .ask(CreateEvent(event, numberOfTickets))
       .mapTo[EventResponse]
 
   def getEvents() = boxOffice.ask(GetEvents).mapTo[Events]

@@ -7,7 +7,7 @@ import scala.concurrent.Future
 
 object BoxOffice {
   def props(implicit timeout: Timeout) = Props(new BoxOffice)
-  def name = "boxOffice"
+  def name                             = "boxOffice"
 
   case class CreateEvent(name: String, tickets: Int)
   case class GetEvent(name: String)
@@ -20,7 +20,7 @@ object BoxOffice {
 
   sealed trait EventResponse
   case class EventCreated(event: Event) extends EventResponse
-  case object EventExists extends EventResponse
+  case object EventExists               extends EventResponse
 }
 
 class BoxOffice(implicit timeout: Timeout) extends Actor {
@@ -43,12 +43,12 @@ class BoxOffice(implicit timeout: Timeout) extends Actor {
       context.child(name).fold(create())(_ => sender() ! EventExists)
 
     case GetTickets(event, tickets) =>
-      def notFound(): Unit = sender() ! TicketSeller.Tickets(event)
+      def notFound(): Unit           = sender() ! TicketSeller.Tickets(event)
       def buy(child: ActorRef): Unit = child forward TicketSeller.Buy(tickets)
       context.child(event).fold(notFound())(buy)
 
     case GetEvent(event) =>
-      def notFound(): Unit = sender() ! None
+      def notFound(): Unit                = sender() ! None
       def getEvent(child: ActorRef): Unit = child forward TicketSeller.GetEvent
       context.child(event).fold(notFound())(getEvent)
 
@@ -66,7 +66,7 @@ class BoxOffice(implicit timeout: Timeout) extends Actor {
       pipe(convertToEvents(Future.sequence(getEvents))) to sender()
 
     case CancelEvent(event) =>
-      def notFound() = sender() ! None
+      def notFound()                   = sender() ! None
       def cancelEvent(child: ActorRef) = child forward TicketSeller.Cancel
       context.child(event).fold(notFound())(cancelEvent)
   }
