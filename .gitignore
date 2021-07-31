@@ -23,6 +23,7 @@
 .tmproj
 nbproject
 Thumbs.db
+.bsp
 
 # Maven output folder
 target
