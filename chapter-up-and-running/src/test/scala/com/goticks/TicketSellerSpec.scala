@@ -2,12 +2,13 @@ package com.goticks
 
 import akka.actor.ActorSystem
 import akka.testkit.{ImplicitSender, TestKit}
-import org.scalatest.{MustMatchers, WordSpecLike}
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 class TicketSellerSpec
     extends TestKit(ActorSystem("testBoxOffice"))
-    with WordSpecLike
-    with MustMatchers
+    with AnyWordSpecLike
+    with Matchers
     with ImplicitSender
     with StopSystemAfterAll {
 
@@ -36,14 +37,14 @@ class TicketSellerSpec
       import TicketSeller._
 
       val firstBatchSize = 10
-      def mkTickets: Vector[Ticket] = (1 to (10 * firstBatchSize)).map(Ticket).to[Vector]
+      def mkTickets: Vector[Ticket] = (1 to (10 * firstBatchSize)).map(Ticket).toVector
 
       val event = "Madlib"
       val ticketingActor = system.actorOf(TicketSeller.props(event))
 
       ticketingActor ! Add(mkTickets)
       ticketingActor ! Buy(firstBatchSize)
-      val bought = (1 to firstBatchSize).map(Ticket).to[Vector]
+      val bought = (1 to firstBatchSize).map(Ticket).toVector
       expectMsg(Tickets(event, bought))
 
       val secondBatchSize = 5
@@ -57,7 +58,7 @@ class TicketSellerSpec
         bought.size must equal(secondBatchSize)
         val last = ix * secondBatchSize + firstBatchSize
         val first = ix * secondBatchSize + firstBatchSize - (secondBatchSize - 1)
-        bought.map(_.id) must equal((first to last).to[Vector])
+        bought.map(_.id) must equal((first to last).toVector)
       }
 
       ticketingActor ! Buy(1)

@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
-import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import com.typesafe.config.{Config, ConfigFactory}
 
@@ -21,10 +20,8 @@ object Main extends App with RequestTimeout {
 
   val api = new RestApi(system, requestTimeout(config)).routes
 
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
-
   val bindingFuture: Future[ServerBinding] =
-    Http().bindAndHandle(api, host, port)
+    Http().newServerAt(host, port).bind(api)
 
   val log = Logging(system.eventStream, "go-ticks")
   bindingFuture

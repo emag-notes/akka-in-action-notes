@@ -6,7 +6,7 @@ version := "1.0"
 
 organization := "com.goticks"
 
-scalaVersion := "2.12.13"
+scalaVersion := "2.13.6"
 
 scalacOptions ++= Seq(
   "-deprecation",
@@ -19,8 +19,8 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion = "2.5.4"
-  val akkaHttpVersion = "10.0.10"
+  val akkaVersion = "2.6.15"
+  val akkaHttpVersion = "10.2.5"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
     "com.typesafe.akka" %% "akka-stream" % akkaVersion,
@@ -28,8 +28,8 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
     "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
     "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-    "ch.qos.logback" % "logback-classic" % "1.1.3",
+    "ch.qos.logback" % "logback-classic" % "1.2.5",
     "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
-    "org.scalatest" %% "scalatest" % "3.0.0" % "test"
+    "org.scalatest" %% "scalatest" % "3.2.9" % "test"
   )
 }
