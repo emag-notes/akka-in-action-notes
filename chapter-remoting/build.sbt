@@ -19,8 +19,8 @@ scalacOptions ++= Seq(
 val akkaVersion = "2.6.15"
 val akkaHttpVersion = "10.2.5"
 
-import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
-import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
+//import com.typesafe.sbt.SbtMultiJvm.multiJvmSettings
+//import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
 lazy val root = (project in file("."))
   .settings(
@@ -41,6 +41,6 @@ lazy val root = (project in file("."))
       ),
     Test / parallelExecution := false
   )
-  .settings(multiJvmSettings: _*)
-  .enablePlugins(MultiJvmPlugin)
-  .configs(MultiJvm)
+//  .settings(multiJvmSettings: _*)
+//  .enablePlugins(MultiJvmPlugin)
+//  .configs(MultiJvm)
